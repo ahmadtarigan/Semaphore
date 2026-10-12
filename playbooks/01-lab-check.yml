@@ -1,1 +1,23 @@
+- name: Lab connectivity, facts and privilege check (read-only)
+  hosts: linux
+  gather_facts: true
+  tasks:
+    - name: Ping over SSH
+      ansible.builtin.ping:
 
+    - name: Report OS and Python
+      ansible.builtin.debug:
+        msg: >-
+          {{ inventory_hostname }}: {{ ansible_facts['distribution'] }}
+          {{ ansible_facts['distribution_version'] }},
+          python {{ ansible_facts['python_version'] }}
+
+    - name: Check privilege escalation
+      ansible.builtin.command: id -u
+      become: true
+      register: root_check
+      changed_when: false
+
+    - name: Assert become yields root
+      ansible.builtin.assert:
+        that: root_check.stdout == "0"
