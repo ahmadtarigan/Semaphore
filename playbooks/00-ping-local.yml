@@ -1,1 +1,6 @@
-
+- name: Verify Semaphore can run Ansible
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Check the Ansible connection
+      ansible.builtin.ping:
