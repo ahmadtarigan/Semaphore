@@ -1,0 +1,11 @@
+- name: Test survey sederhana
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Tampilkan nilai dari survey
+      ansible.builtin.debug:
+        msg:
+          - "Halo {{ nama }}"
+          - "Environment: {{ environment_name }}"
+          - "Jumlah server: {{ jumlah | int }}"
